@@ -23,6 +23,8 @@ def transform(points, param_func, param_dims, xmin, xmax, ymin, ymax):
     param_space = np.zeros(param_dims)
     yvals = np.arange(ymin, ymax + ((ymax - ymin) / param_dims[0]), (ymax - ymin) / param_dims[0])
     xvals = np.arange(xmin, xmax + ((xmax - xmin) / param_dims[1]), (xmax - xmin) / param_dims[1])
+    print(xvals)
+    print(yvals)
     for p in points:
         vote(p, param_func, param_space, xvals, yvals)
     return param_space
@@ -36,20 +38,30 @@ def plot_points(points, filename, title):
 
 
 def plot_param_space(param_space, filename, title):
-    plt.imshow(param_space, cmap='Greys')
+    plt.imshow(param_space, cmap='gray')
     plt.gca().invert_yaxis()
     plt.title(title, loc='left')
     plt.savefig(filename)
     plt.clf()
 
 
-def linear_param(xi, yi, m):
+def cartesian_param(xi, yi, m):
     return m * (-xi) + yi
+
+def polar_param(xi, yi, theta):
+    return xi * math.cos(theta) + yi * math.sin(theta)
 
 
 points = np.array([(1, 0), (-1, 0), (0, 3)])
-param_space = transform(points, linear_param, (6, 6), -3, 3, -6, 6)
+
+# compute polar parameter space
+param_space = transform(points, polar_param, (60, 60), -3, 3, -6, 6)
 print(np.flip(param_space, axis=0))
+plot_param_space(param_space, 'polar_param_space', 'Polar Parameter Space')
+
+# compute cartesian parameter space
+param_space = transform(points, cartesian_param, (60, 60), -3, 3, -6, 6)
+print(np.flip(param_space, axis=0))
+plot_param_space(param_space, 'cartesian_param_space', 'Cartesian Parameter Space')
 
 plot_points(points, 'points', 'Point Space')
-plot_param_space(param_space, 'param_space', 'Parameter Space')
