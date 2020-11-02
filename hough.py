@@ -57,11 +57,11 @@ points = np.array([(1, 0), (-1, 0), (0, 3)])
 # compute polar parameter space
 param_space = transform(points, polar_param, (60, 60), -3, 3, -6, 6)
 print(np.flip(param_space, axis=0))
-plot_param_space(param_space, 'polar_param_space', 'Polar Parameter Space')
+plot_param_space(param_space, 'plots/polar_param_space', 'Polar Parameter Space')
 
 # compute cartesian parameter space
 param_space = transform(points, cartesian_param, (60, 60), -3, 3, -6, 6)
 print(np.flip(param_space, axis=0))
-plot_param_space(param_space, 'cartesian_param_space', 'Cartesian Parameter Space')
+plot_param_space(param_space, 'plots/cartesian_param_space', 'Cartesian Parameter Space')
 
-plot_points(points, 'points', 'Point Space')
+plot_points(points, 'plots/points', 'Point Space')
